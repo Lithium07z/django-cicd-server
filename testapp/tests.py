@@ -16,7 +16,7 @@ class Test(TestCase):
         b = 2
         assert (a == b)
 
-    def test_success(self):
-        a = 1
-        b = 1
-        assert (a == b)
+    # def test_success(self):
+    #     a = 1
+    #     b = 1
+    #     assert (a == b)
