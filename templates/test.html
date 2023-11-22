@@ -1,0 +1,9 @@
+{% load static %}
+{% if a %}
+    <ul>
+        <p>{{ a }}</p>
+        <img src="{% static 'test.png' %}" width="500" height="500" alt="Resized Image">
+    </ul>
+{% else %}
+    <p>어흑</p>
+{% endif %}
