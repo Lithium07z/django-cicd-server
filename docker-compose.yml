@@ -20,6 +20,8 @@ services:
     command: ["gunicorn", "-b", "0.0.0.0:8000", "config.wsgi:application"]
     volumes:
       - .:/app
+    environment:
+      - _HOW=prod
     ports:
       - "8000:8000"
     expose:

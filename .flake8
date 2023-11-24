@@ -13,3 +13,4 @@ ignore =
 max-line-length = 200
 inline-quotes = "
 no-accept-encodings = True
+exit-zero = False
