@@ -76,4 +76,3 @@ jobs:
             cd /home/ubuntu/${{ env.REP_NAME }}
             git pull
             sh /home/ubuntu/${{ env.REP_NAME }}/deploy/startup.sh
-
