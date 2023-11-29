@@ -1,3 +1,5 @@
 # django-cicd-server
 
-11/28 10:08
+### 1. settings ip 추가하기!!
+
+8:20
