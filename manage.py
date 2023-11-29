@@ -7,8 +7,10 @@ import sys
 def main():
     if (os.environ.get('_HOW') == 'prod'):
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.prod')
+        print('1')
     else:
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.local')
+        print('2')
 
     try:
         from django.core.management import execute_from_command_line
