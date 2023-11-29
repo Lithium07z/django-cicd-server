@@ -25,4 +25,4 @@ fi
 
 #docker compose release
 echo "start docker compose up: ubuntu"
-sudo docker compose up -d -f "$(dirname "$(pwd)")/docker-compose.yml" --build
+sudo docker compose -f /home/ubuntu/django-cicd-server/docker-compose.yml up --build -d

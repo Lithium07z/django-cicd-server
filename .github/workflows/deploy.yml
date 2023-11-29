@@ -1,0 +1,78 @@
+# name: Deploy to EC2
+
+# on:
+#   push:
+#     branches: [ "master" ]
+
+# env:
+#   S3_BUCKET_NAME: ec2-cd
+#   CODE_DEPLOY_APPLICATION_NAME: test-code-deploy
+#   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: test-deploy
+
+# jobs:
+#   build:
+#     name: Build
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: checkout
+#       uses: actions/checkout@master
+
+#     - name: zip project files
+#       run: zip -r ./$GITHUB_SHA.zip .
+
+#     - name: access to AWS
+#       uses: aws-actions/configure-aws-credentials@v2
+#       with:
+#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         aws-region: ${{ secrets.AWS_REGION }} 
+        
+#     - name: upload to S3
+#       run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip
+
+#     - name: Code Deploy
+#       run: | 
+#         aws deploy create-deployment \
+#         --deployment-config-name CodeDeployDefault.AllAtOnce \
+#         --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+#         --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
+#         --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$GITHUB_SHA.zip
+
+#type 2
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [ "master" ]
+
+env:
+  REP_NAME: django-cicd-server
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest # 실행될 인스턴스 OS와 버전
+
+    steps:
+      # - name: Get Github Actions IP
+      #   id: ip
+      #   uses: haythem/public-ip@v1.2
+      
+      # - name: access to AWS
+      #   uses: aws-actions/configure-aws-credentials@v2
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: ${{ secrets.AWS_REGION }} 
+
+      - name: excuting remote ssh commands
+        uses: appleboy/ssh-action@v0.1.6 # ssh 접속하는 오픈소스
+        with:
+          host: ${{ secrets.REMOTE_IP }} # 인스턴스 IP
+          username: ${{ secrets.REMOTE_USER }} # 우분투 아이디
+          key: ${{ secrets.REMOTE_PRIVATE_KEY }} # ec2 instance pem key
+          port: ${{ secrets.REMOTE_SSH_PORT }} # 접속포트
+          script: | # 실행할 스크립트
+            cd /home/ubuntu/${{ env.REP_NAME }}
+            git pull
+            sh /home/ubuntu/${{ env.REP_NAME }}/deploy/startup.sh
