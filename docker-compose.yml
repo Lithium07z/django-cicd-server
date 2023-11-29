@@ -17,7 +17,8 @@ services:
     build: .
     container_name: was
     # command: python manage.py runserver 0:8000
-    command: ["gunicorn", "-b", "0.0.0.0:8000", "config.wsgi:application"]
+    # command: ["gunicorn", "-b", "0.0.0.0:8000", "config.wsgi:application"]
+    command: ["./entrypoint.sh"]
     volumes:
       - .:/app
     environment:
