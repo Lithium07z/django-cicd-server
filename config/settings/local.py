@@ -1,6 +1,6 @@
 from .base import *
 
-ALLOWED_HOSTS = ['was']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 DATABASES = {
     'default': {
