@@ -40,3 +40,12 @@ class send(View):
             "data":a
         }
         return HttpResponse(json.dumps(result), content_type = "application/json")
+    
+class reset(View):
+    def get(self, request):
+        Data.objects.all().delete()
+        result = {
+            "msg":"ok",
+            "data": []
+        }
+        return HttpResponse(json.dumps(result), content_type = "application/json")
