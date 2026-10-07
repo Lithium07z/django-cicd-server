@@ -1,3 +1,4 @@
+import os
 from .base import *
 
 ALLOWED_HOSTS = ['???']
@@ -7,7 +8,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mydb',
         'USER': 'myuser',
-        'PASSWORD': 'REMOVED_PASSWORD',
+        'PASSWORD': os.environ["DB_PASSWORD"],
         'HOST': 'postgres',
         'PORT': '5432',
     }

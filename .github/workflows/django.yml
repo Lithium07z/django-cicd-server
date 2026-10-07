@@ -29,6 +29,11 @@ jobs:
       run: |
         flake8
         
+    - name: Configure ephemeral test credentials
+      run: |
+        python -c "import secrets; print('DJANGO_SECRET_KEY=' + secrets.token_urlsafe(64)); print('DB_PASSWORD=' + secrets.token_urlsafe(32))" >> "$GITHUB_ENV"
+        echo "_HOW=local" >> "$GITHUB_ENV"
+
     - name: Run Tests
       run: |
         python manage.py test

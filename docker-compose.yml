@@ -9,7 +9,7 @@ services:
     environment:
       - POSTGRES_DB=mydb
       - POSTGRES_USER=myuser
-      - POSTGRES_PASSWORD=REMOVED_PASSWORD
+      - POSTGRES_PASSWORD=${DB_PASSWORD:?DB_PASSWORD is required}
     ports:
         - "5432:5432"
 
@@ -22,6 +22,8 @@ services:
       - .:/app
     environment:
       - _HOW=prod
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:?DJANGO_SECRET_KEY is required}
+      - DB_PASSWORD=${DB_PASSWORD:?DB_PASSWORD is required}
     ports:
       - "8000:8000"
     expose:
